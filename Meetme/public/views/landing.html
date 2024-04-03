@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+
+
+    <title>Meetme , Free Video Calls, Messaging and Screen Sharing</title>
+    <link rel="shortcut icon" href=" " />
+    <link rel="apple-touch-icon" href=" " />
+
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description"
+        content="MiroTalk SFU powered by WebRTC and mediasoup, Real-time Simple Secure Fast video calls, messaging and screen sharing capabilities in the browser." />
+    <meta name="keywords"
+        content="webrtc, miro, mediasoup, mediasoup-client, self hosted, voip, sip, real-time communications, chat, messaging, meet, webrtc stun, webrtc turn, webrtc p2p, webrtc sfu, video meeting, video chat, video conference, multi video chat, multi video conference, peer to peer, p2p, sfu, rtc, alternative to, zoom, microsoft teams, google meet, jitsi, meeting" />
+
+
+    <meta property="og:type" content="app-webrtc" />
+    <meta property="og:site_name" content="MiroTalk SFU" />
+    <meta property="og:title" content="Click the link to make a call." />
+    <meta property="og:description"
+        content="MiroTalk SFU calling provides real-time video calls, messaging and screen sharing." />
+    <meta property="og:image" content="https://sfu.mirotalk.com/images/mirotalksfu.png" />
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="../css/landing.css" />
+    <link rel="stylesheet" href="../css/Snow.css" />
+
+
+    <script async src="../js/Umami.js"></script>
+    <script async src="../js/Snow.js"></script>
+    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    <script src="https://rawgit.com/leizongmin/js-xss/master/dist/xss.js"></script>
+</head>
+
+<body class="is-boxed has-animations">
+    <div id="snow-container"></div>
+    <div class="body-wrap">
+
+
+        <main>
+            <section class="hero reveal-from-bottom">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <h1 class="hero-title mt-0">
+                                Meetme<br />Free browser based Real-time video calls.<br />
+                                Simple, Secure, Fast.
+                            </h1>
+                            <p class="hero-paragraph">
+                                Start your next video call with a single click. No download, plug-in, or login is
+                                required. Just get straight to talking, messaging, and sharing your screen.
+                            </p>
+                        </div>
+                        <div class="hero-figure anime-element">
+                            <svg class="placeholder" width="528" height="396" viewBox="0 0 528 396">
+                                <rect width="528" height="396" style="fill: transparent" />
+                            </svg>
+                            <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
+                            <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
+                            <div class="hero-figure-box hero-figure-box-05"></div>
+                            <div class="hero-figure-box hero-figure-box-06"></div>
+                            <div class="hero-figure-box hero-figure-box-07"></div>
+                            <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
+                            <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
+                            <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta section">
+                <div class="container">
+                    <div class="cta-inner section-inner br-12">
+                        <h3 class="section-title mt-0">
+                            Pick a room name.<br />
+                            How about this one?
+                        </h3>
+                        <div>
+                            <div class="mb-24">
+                                <label for="roomName"></label>
+                                <div class="form-group-desktop">
+                                    <input id="roomName" class="form-input" type="text" maxlength="36" value=""
+                                        style="border-radius: 6px" />
+                                    <button id="genRoomButton"
+                                        class="button button-primary br-6 mr-8 mb-8 fas fa-arrows-rotate"
+                                        onclick="genRoom()"></button>
+                                    <button id="joinRoomButton" class="button button-primary pulse"
+                                        onclick="joinRoom()">
+                                        Join Room
+                                    </button>
+                                    <script>
+                                        document.getElementById('roomName').onkeyup = (e) => {
+                                            if (e.keyCode === 13) {
+                                                e.preventDefault();
+                                                joinRoom();
+                                            }
+                                        };
+                                        function genRoom() {
+                                            document.getElementById('roomName').value = getUUID4();
+                                        }
+                                        function getUUID4() {
+                                            return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+                                                (
+                                                    c ^
+                                                    (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+                                                ).toString(16),
+                                            );
+                                        }
+                                        function joinRoom() {
+                                            const roomName = filterXSS(document.getElementById('roomName').value);
+                                            if (roomName) {
+                                                window.location.href = '/join/' + roomName;
+                                                window.localStorage.lastRoom = roomName;
+                                            } else {
+                                                alert('Room name empty!\nPlease pick a room name.');
+                                            }
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                            <div id="lastRoomContainer" class="last-room">
+                                <span>Your recent room:</span>
+                                <a id="lastRoom"></a>
+                            </div>
+                            <script>
+                                const lastRoomContainer = document.getElementById('lastRoomContainer');
+                                const lastRoom = document.getElementById('lastRoom');
+                                const lastRoomName = window.localStorage.lastRoom
+                                    ? window.localStorage.lastRoom
+                                    : '';
+                                if (lastRoomName) {
+                                    lastRoomContainer.style.display = 'inline-flex';
+                                    lastRoom.setAttribute('href', '/join/' + lastRoomName);
+                                    lastRoom.innerText = lastRoomName;
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section class="features section">
+                <div class="container-sm">
+                    <div class="pricing-header text-center reveal-from-bottom mt-32" data-reveal-delay="150">
+                        <br />
+                        <h2 class="section-title mt-0">
+                            Unlimited number of conference rooms and users without call time limitation!
+                        </h2>
+                        <p class="section-paragraph mb-0">
+                            Meetme with integrated Server. We engineered a platform with maximum video quality
+                            lowest latency that makes your calls crystal clear. Compatible with all browsers and
+                            platforms!
+                        </p>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="features-inner section-inner has-bottom-divider">
+                        <div class="features-wrap">
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/screen_sharing.svg"
+                                            alt="mirotalksfu-screen" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Screen Sharing</h4>
+                                    <p class="text-sm mb-0">
+                                        Share your screen, application window, present your documents, slides and
+                                        more.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/webcam_streaming.svg"
+                                            alt="mirotalksfu-webcam" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">WebCam Streaming</h4>
+                                    <p class="text-sm mb-0">
+                                        Having the webcam on, allows participants to make a deeper connection with
+                                        you. Up to 4k resolution.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/audio_streaming.svg"
+                                            alt="mirotalksfu-audio" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Audio Streaming</h4>
+                                    <p class="text-sm mb-0">
+                                        Echo cancellation and noise suppression that make your audio crystal clear.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/webcam_chat.svg" alt="mirotalksfu-chat" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Chat</h4>
+                                    <p class="text-sm mb-0">
+                                        Chat with others in meeting with integrated emoji picker to show your
+                                        feeling.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/recording_meeting.svg"
+                                            alt="mirotalksfu-recording" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Recording meeting</h4>
+                                    <p class="text-sm mb-0">
+                                        Record your Screen, Video, and Audio on Your browser Blob. Save it for using
+                                        it in the future or to share with others.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/collaborative_whitboard.svg"
+                                            alt="mirotalksfu-whiteboard" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Collaborative Whiteboard</h4>
+                                    <p class="text-sm mb-0">
+                                        Advanced interactive whiteboard to draw and explain your concepts to the
+                                        other participants in the meeting.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/file_sharing.svg"
+                                            alt="mirotalksfu-filesharing" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">File Sharing</h4>
+                                    <p class="text-sm mb-0">
+                                        Share any types of files with all participants in the meeting.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/total_privacy.svg"
+                                            alt="mirotalksfu-privacy" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Total privacy</h4>
+                                    <p class="text-sm mb-0">
+                                        Data stays between you and your participants. MiroTalk SFU doesn't collect
+                                        or share personal information.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="feature text-center is-revealing">
+                                <div class="feature-inner">
+                                    <div class="feature-icon">
+                                        <img class="wh-200-150" src="../svg/maximum_security.svg"
+                                            alt="mirotalksfu-security" />
+                                    </div>
+                                    <h4 class="feature-title mt-24">Maximum security</h4>
+                                    <p class="text-sm mb-0">
+                                        Thanks to WebRTC, all the media streams are encrypted using Secure Real-time
+                                        Transport Protocol (SRTP).
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="site-footer-inner">
+                    <div class="brand footer-brand">
+                        <a href="/">
+                            <img class="header-logo-image" src="../images/logo.svg" alt="Logo" />
+                        </a>
+                    </div>
+                    <ul class="footer-links list-reset">
+                        <li>
+                            <a href="/about">About</a>
+                        </li>
+                        <li>
+                            <a href="/privacy">Privacy Policy</a>
+                        </li>
+                        <li>
+                            Contact:
+                            <a target="_blank" href="mailto:sushilkumaryadav9545@gmail.com">AS
+                                Developers</a>
+                        </li>
+                    </ul>
+                    <ul class="footer-social-links list-reset">
+
+                    </ul>
+                    <div class="footer-copyright">&copy; 2024 Meetme , all rights reserved</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script defer src="../js/landing.js"></script>
+    <script defer src="../js/newRoom.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>

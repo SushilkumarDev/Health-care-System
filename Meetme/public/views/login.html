@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+
+
+    <title>Meetme- Host Protected login required.</title>
+    <link rel="shortcut icon" href=" " />
+    <link rel="apple-touch-icon" href=" " />
+
+
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description"
+        content="MiroTalk SFU powered by WebRTC and mediasoup, Real-time secure video calls, messaging and screen sharing capabilities in the browser." />
+    <meta name="keywords"
+        content="webrtc, miro, mediasoup, mediasoup-client, self hosted, voip, sip, real-time communications, chat, messaging, meet, webrtc stun, webrtc turn, webrtc p2p, webrtc sfu, video meeting, video chat, video conference, multi video chat, multi video conference, peer to peer, p2p, sfu, rtc, alternative to, zoom, microsoft teams, google meet, jitsi, meeting" />
+
+
+
+    <meta property="og:type" content="app-webrtc" />
+    <meta property="og:site_name" content="MiroTalk SFU" />
+    <meta property="og:title" content="Click the link to make a call." />
+    <meta property="og:description"
+        content="MiroTalk SFU calling provides real-time video calls, messaging and screen sharing." />
+    <meta property="og:image" content="https://sfu.mirotalk.com/images/mirotalksfu.png" />
+
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" />
+    <link rel="stylesheet" href="../css/landing.css" />
+
+
+    <script async src="../js/Umami.js"></script>
+    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <script src="https://rawgit.com/leizongmin/js-xss/master/dist/xss.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body class="is-boxed has-animations">
+    <div class="body-wrap">
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <div id="loginForm">
+                                <br />
+                                <div class="mb-12">
+                                    <input id="username" class="form-input" type="name" placeholder="Username"
+                                        maxlength="36" style="border-radius: 6px" required />
+                                </div>
+                                <br />
+                                <div class="mb-12">
+                                    <input id="password" class="form-input" type="password" style="border-radius: 6px"
+                                        placeholder="Password" maxlength="36" required />
+                                </div>
+                                <div class="mt-24 mb-32">
+                                    <button id="loginButton" class="button button-primary button-block">
+                                        Login
+                                    </button>
+                                </div>
+                            </div>
+                            <script>
+                                console.log(window.location);
+
+                                const usernameInput = document.getElementById('username');
+                                const passwordInput = document.getElementById('password');
+                                const loginBtn = document.getElementById('loginButton');
+
+                                usernameInput.onkeyup = (e) => {
+                                    if (e.keyCode === 13) {
+                                        e.preventDefault();
+                                        login();
+                                    }
+                                };
+                                passwordInput.onkeyup = (e) => {
+                                    if (e.keyCode === 13) {
+                                        e.preventDefault();
+                                        login();
+                                    }
+                                };
+
+                                loginBtn.onclick = (e) => {
+                                    login();
+                                };
+
+                                function login() {
+                                    const username = filterXSS(document.getElementById('username').value);
+                                    const password = filterXSS(document.getElementById('password').value);
+
+
+
+                                    const qs = new URLSearchParams(window.location.search);
+                                    const room = filterXSS(qs.get('room'));
+
+
+                                    const pathParts = window.location.pathname.split('/');
+                                    const roomPath = pathParts[pathParts.length - 1];
+
+                                    if (username && password) {
+                                        axios
+                                            .post('/login', {
+                                                username: username,
+                                                password: password,
+                                            })
+                                            .then(function (response) {
+                                                console.log(response);
+
+
+                                                window.sessionStorage.peer_username = username;
+                                                window.sessionStorage.peer_password = password;
+
+                                                if (room) {
+                                                    return (window.location.href =
+                                                        '/join/' + window.location.search);
+                                                }
+
+                                                if (roomPath) {
+                                                    return (window.location.href = '/join/' + roomPath);
+                                                }
+
+                                                return (window.location.href = '/logged');
+                                            })
+                                            .catch(function (error) {
+                                                console.error(error);
+                                                alert('Unauthorized');
+                                            });
+                                        return;
+                                    }
+                                    if (!username && !password) {
+                                        alert('Username and Password required');
+                                        return;
+                                    }
+                                    if (!username) {
+                                        alert('Username required');
+                                        return;
+                                    }
+                                    if (!password) {
+                                        alert('Password required');
+                                        return;
+                                    }
+                                }
+                            </script>
+                        </div>
+                        <div class="hero-figure anime-element">
+                            <svg class="placeholder" width="528" height="396" viewBox="0 0 528 396">
+                                <rect width="528" height="396" style="fill: transparent" />
+                            </svg>
+                            <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
+                            <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
+                            <div class="hero-figure-box hero-figure-box-05"></div>
+                            <div class="hero-figure-box hero-figure-box-06"></div>
+                            <div class="hero-figure-box hero-figure-box-07"></div>
+                            <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
+                            <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
+                            <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="site-footer-inner">
+                    <div class="brand footer-brand">
+                        <a href="/">
+                            <img class="header-logo-image" src="../images/logo.svg" alt="Logo" />
+                        </a>
+                    </div>
+                    <ul class="footer-links list-reset">
+
+                        <li>
+                            <a href="/privacy">Privacy Policy</a>
+                        </li>
+                        <li>
+                            Contact:
+                            <a target="_blank" href="mailto:sushilkumaryadav9545@gmail.com">AS
+                                Developers</a>
+                        </li>
+                    </ul>
+                    <ul class="footer-social-links list-reset">
+
+                    </ul>
+                    <div class="footer-copyright">&copy; 2024 Meetme , all rights reserved</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script defer src="../js/landing.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>
