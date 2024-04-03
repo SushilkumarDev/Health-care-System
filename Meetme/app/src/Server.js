@@ -1,49 +1,4 @@
 'use strict';
-
-/*
-███████ ███████ ██████  ██    ██ ███████ ██████  
-██      ██      ██   ██ ██    ██ ██      ██   ██ 
-███████ █████   ██████  ██    ██ █████   ██████  
-     ██ ██      ██   ██  ██  ██  ██      ██   ██ 
-███████ ███████ ██   ██   ████   ███████ ██   ██                                           
-
-dependencies: {
-    @sentry/node            : https://www.npmjs.com/package/@sentry/node
-    @sentry/integrations    : https://www.npmjs.com/package/@sentry/integrations
-    axios                   : https://www.npmjs.com/package/axios
-    body-parser             : https://www.npmjs.com/package/body-parser
-    compression             : https://www.npmjs.com/package/compression
-    colors                  : https://www.npmjs.com/package/colors
-    cors                    : https://www.npmjs.com/package/cors
-    crypto-js               : https://www.npmjs.com/package/crypto-js
-    express                 : https://www.npmjs.com/package/express
-    httpolyglot             : https://www.npmjs.com/package/httpolyglot
-    mediasoup               : https://www.npmjs.com/package/mediasoup
-    mediasoup-client        : https://www.npmjs.com/package/mediasoup-client
-    ngrok                   : https://www.npmjs.com/package/ngrok
-    openai                  : https://www.npmjs.com/package/openai
-    qs                      : https://www.npmjs.com/package/qs
-    socket.io               : https://www.npmjs.com/package/socket.io
-    swagger-ui-express      : https://www.npmjs.com/package/swagger-ui-express
-    uuid                    : https://www.npmjs.com/package/uuid
-    xss                     : https://www.npmjs.com/package/xss
-    yamljs                  : https://www.npmjs.com/package/yamljs
-}
-*/
-
-/**
- * MiroTalk SFU - Server component
- *
- * @link    GitHub: https://github.com/miroslavpejic85/mirotalksfu
- * @link    Official Live demo: https://sfu.mirotalk.com
- * @license For open source use: AGPLv3
- * @license For commercial or closed source, contact us at license.mirotalk@gmail.com or purchase directly via CodeCanyon
- * @license CodeCanyon: https://codecanyon.net/item/mirotalk-sfu-webrtc-realtime-video-conferences/40769970
- * @author  AS Developers - sushilkumar.yadav.9545@gmail.com
- * @version 1.3.52
- *
- */
-
 const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
@@ -116,13 +71,6 @@ if (sentryEnabled) {
         ],
         tracesSampleRate: sentryTracesSampleRate,
     });
-    /*
-    log.log('test-log');
-    log.info('test-info');
-    log.warn('test-warning');
-    log.error('test-error');
-    log.debug('test-debug');
-    */
 }
 
 
@@ -273,8 +221,6 @@ function startServer() {
         if (Object.keys(req.query).length > 0) {
             log.debug('Direct Join', req.query);
 
-            // http://localhost:3010/join?room=test&roomPassword=0&name=mirotalksfu&audio=1&video=1&screen=0&hide=0&notify=1
-            // http://localhost:3010/join?room=test&roomPassword=0&name=mirotalksfu&audio=1&video=1&screen=0&hide=0&notify=0&username=username&password=password
 
             const { room, roomPassword, name, audio, video, screen, hide, notify, username, password, isPresenter } =
                 checkXSS(req.query);

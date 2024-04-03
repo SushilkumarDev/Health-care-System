@@ -1,0 +1,10 @@
+/**
+ * Adds local variables to exception frames
+ */
+export declare const LocalVariables: import("@sentry/types").Integration & {
+    new (...args: any[]): import("@sentry/types").Integration & import("@sentry/types").IntegrationFnResult & {
+        setupOnce: (addGlobalEventProcessor?: ((callback: import("@sentry/types").EventProcessor) => void) | undefined, getCurrentHub?: (() => import("@sentry/types").Hub) | undefined) => void;
+    };
+    id: string;
+};
+//# sourceMappingURL=index.d.ts.map

@@ -1,0 +1,11 @@
+/** Add node modules / packages to the event */
+export declare const Modules: import("@sentry/types").Integration & {
+    new (): import("@sentry/types").Integration & {
+        name: string;
+        processEvent(event: import("@sentry/types").Event): import("@sentry/types").Event;
+    } & {
+        setupOnce: (addGlobalEventProcessor?: ((callback: import("@sentry/types").EventProcessor) => void) | undefined, getCurrentHub?: (() => import("@sentry/types").Hub) | undefined) => void;
+    };
+    id: string;
+};
+//# sourceMappingURL=modules.d.ts.map

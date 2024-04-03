@@ -54,9 +54,9 @@ const wbHeight = 600;
 
 const swalImageUrl = '../images/pricing-illustration.svg';
 
-// ####################################################
+
 // LOCAL STORAGE
-// ####################################################
+
 
 const lS = new LocalStorage();
 
@@ -72,11 +72,10 @@ console.log('LOCAL_STORAGE', {
     localStorageInitConfig: localStorageInitConfig,
 });
 
-// ####################################################
-// DYNAMIC SETTINGS
-// ####################################################
 
-let swalBackground = 'radial-gradient(#393939, #000000)'; //'rgba(0, 0, 0, 0.7)';
+// DYNAMIC SETTINGS
+ 
+let swalBackground = 'radial-gradient(#393939, #000000)';  
 
 let rc = null;
 let producer = null;
@@ -147,14 +146,12 @@ const RoomURL = window.location.origin + '/join/' + room_id;
 
 let transcription;
 
-// ####################################################
-// INIT ROOM
-// ####################################################
-
+ // INIT ROOM
+ 
 function initClient() {
     setTheme();
 
-    // Transcription
+    
     transcription = new Transcription();
     transcription.init();
 
@@ -247,10 +244,8 @@ function initClient() {
     initEnumerateDevices();
 }
 
-// ####################################################
-// HANDLE MAIN BUTTONS TOOLTIP
-// ####################################################
-
+ // HANDLE MAIN BUTTONS TOOLTIP
+ 
 function refreshMainButtonsToolTipPlacement() {
     if (!DetectRTC.isMobileDevice) {
         const placement = BtnsBarPosition.options[BtnsBarPosition.selectedIndex].value == 'vertical' ? 'right' : 'top';
@@ -277,10 +272,8 @@ function refreshMainButtonsToolTipPlacement() {
     }
 }
 
-// ####################################################
-// HANDLE TOOLTIP
-// ####################################################
-
+ // HANDLE TOOLTIP
+ 
 function setTippy(elem, content, placement, allowHTML = false) {
     const element = document.getElementById(elem);
     if (element) {
@@ -297,10 +290,8 @@ function setTippy(elem, content, placement, allowHTML = false) {
     }
 }
 
-// ####################################################
-// GET ROOM ID
-// ####################################################
-
+ // GET ROOM ID
+ 
 function getRoomId() {
     let qs = new URLSearchParams(window.location.search);
     let queryRoomId = filterXSS(qs.get('room'));
@@ -323,10 +314,8 @@ function makeId(length) {
     return result;
 }
 
-// ####################################################
-// INIT ROOM
-// ####################################################
-
+ // INIT ROOM
+ 
 async function initRoom() {
     if (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia) {
         BUTTONS.main.startScreenButton && show(initStartScreenButton);
@@ -341,10 +330,8 @@ async function initRoom() {
     }
 }
 
-// ####################################################
-// ENUMERATE DEVICES
-// ####################################################
-
+ // ENUMERATE DEVICES
+ 
 async function initEnumerateDevices() {
     console.log('01 ----> init Enumerate Devices');
     await initEnumerateVideoDevices();
@@ -354,7 +341,7 @@ async function initEnumerateDevices() {
 
 async function initEnumerateVideoDevices() {
     if (isEnumerateVideoDevices) return;
-    // allow the video
+    
     await navigator.mediaDevices
         .getUserMedia({ video: true })
         .then(async (stream) => {
@@ -391,7 +378,7 @@ async function enumerateVideoDevices(stream) {
 
 async function initEnumerateAudioDevices() {
     if (isEnumerateAudioDevices) return;
-    // allow the audio
+     
     await navigator.mediaDevices
         .getUserMedia({ audio: true })
         .then(async (stream) => {
@@ -430,7 +417,7 @@ async function enumerateAudioDevices(stream) {
             isEnumerateAudioDevices = true;
             const sinkId = 'sinkId' in HTMLMediaElement.prototype;
             speakerSelect.disabled = !sinkId;
-            // Check if there is speakers
+            
             if (!sinkId || initSpeakerSelect.options.length === 0) {
                 hide(initSpeakerSelect);
                 hide(speakerSelectDiv);
@@ -466,10 +453,8 @@ async function addChild(device, els) {
     });
 }
 
-// ####################################################
-// MICROPHONE VOLUME INDICATOR
-// ####################################################
-
+ // MICROPHONE VOLUME INDICATOR
+ 
 async function getMicrophoneVolumeIndicator(stream) {
     if (isAudioContextSupported() && hasAudioTrack(stream)) {
         stopMicrophoneProcessing();
@@ -522,10 +507,8 @@ function hasVideoTrack(mediaStream) {
     return videoTracks.length > 0;
 }
 
-// ####################################################
-// API CHECK
-// ####################################################
-
+ // API CHECK
+ 
 function getScreen() {
     let qs = new URLSearchParams(window.location.search);
     let screen = filterXSS(qs.get('screen'));
@@ -642,10 +625,8 @@ function getRoomPassword() {
     return false;
 }
 
-// ####################################################
-// INIT CONFIG
-// ####################################################
-
+ // INIT CONFIG
+ 
 async function checkInitConfig() {
     const localStorageInitConfig = lS.getLocalStorageInitConfig();
     console.log('04.5 ----> Get init config', localStorageInitConfig);
@@ -659,10 +640,8 @@ async function checkInitConfig() {
     }
 }
 
-// ####################################################
-// SOME PEER INFO
-// ####################################################
-
+ // SOME PEER INFO
+ 
 function getPeerInfo() {
     peer_info = {
         join_data_time: getDataTimeString(),
@@ -690,10 +669,8 @@ function getPeerInfo() {
     };
 }
 
-// ####################################################
-// ENTER YOUR NAME | Enable/Disable AUDIO/VIDEO
-// ####################################################
-
+ // ENTER YOUR NAME | Enable/Disable AUDIO/VIDEO
+ 
 async function whoAreYou() {
     console.log('04 ----> Who are you?');
 
@@ -744,7 +721,7 @@ async function whoAreYou() {
         inputPlaceholder: 'Enter your name',
         inputAttributes: { maxlength: 32 },
         inputValue: default_name,
-        html: initUser, // Inject HTML
+        html: initUser, 
         confirmButtonText: `Join meeting`,
         customClass: { popup: 'init-modal-size' },
         showClass: { popup: 'animate__animated animate__fadeInDown' },
@@ -864,18 +841,15 @@ function checkMedia() {
         let queryPeerVideo = video === '1' || video === 'true';
         if (queryPeerVideo != null) isVideoAllowed = queryPeerVideo;
     }
-    // elemDisplay('tabVideoDevicesBtn', isVideoAllowed);
-    // elemDisplay('tabAudioDevicesBtn', isAudioAllowed);
-
+ 
     console.log('Direct join', {
         audio: isAudioAllowed,
         video: isVideoAllowed,
     });
 }
 
-// ####################################################
-// SHARE ROOM
-// ####################################################
+ // SHARE ROOM
+
 
 async function shareRoom(useNavigator = false) {
     if (navigator.share && useNavigator) {
@@ -891,62 +865,58 @@ async function shareRoom(useNavigator = false) {
     function share() {
         sound('open');
 
-        // Swal.fire({
-        //     background: swalBackground,
-        //     position: 'center',
-        //     title: 'Share the room',
-        //     html: `
-        //     // <div id="qrRoomContainer">
-        //     //     <canvas id="qrRoom"></canvas>
-        //     // </div>
-        //     <br/>
-        //     <p style="background:transparent; color:rgb(8, 189, 89);">Join from your mobile device</p>
-        //     <p style="background:transparent; color:white; font-family: Arial, Helvetica, sans-serif;">No need for apps, simply capture the QR code with your mobile camera Or Invite someone else to join by sending them the following URL</p>
-        //     <p style="background:transparent; color:rgb(8, 189, 89);">${RoomURL}</p>`,
-        //     showDenyButton: true,
-        //     showCancelButton: true,
-        //     cancelButtonColor: 'red',
-        //     denyButtonColor: 'green',
-        //     confirmButtonText: `Copy URL`,
-        //     denyButtonText: `Email invite`,
-        //     cancelButtonText: `Close`,
-        //     showClass: { popup: 'animate__animated animate__fadeInDown' },
-        //     hideClass: { popup: 'animate__animated animate__fadeOutUp' },
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         copyRoomURL();
-        //     } else if (result.isDenied) {
-        //         shareRoomByEmail();
-        //     }
-        //     // share screen on join
-        //     if (isScreenAllowed) {
-        //         rc.shareScreen();
-        //     }
-        // });
+        Swal.fire({
+            background: swalBackground,
+            position: 'center',
+            title: 'Share the room',
+            html: `
+            <div id="qrRoomContainer">
+                <canvas id="qrRoom"></canvas>
+            </div>
+            <br/>
+            <p style="background:transparent; color:rgb(8, 189, 89);">Join from your mobile device</p>
+            <p style="background:transparent; color:white; font-family: Arial, Helvetica, sans-serif;">No need for apps, simply capture the QR code with your mobile camera Or Invite someone else to join by sending them the following URL</p>
+            <p style="background:transparent; color:rgb(8, 189, 89);">${RoomURL}</p>`,
+            showDenyButton: true,
+            showCancelButton: true,
+            cancelButtonColor: 'red',
+            denyButtonColor: 'green',
+            confirmButtonText: `Copy URL`,
+            denyButtonText: `Email invite`,
+            cancelButtonText: `Close`,
+            showClass: { popup: 'animate__animated animate__fadeInDown' },
+            hideClass: { popup: 'animate__animated animate__fadeOutUp' },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                copyRoomURL();
+            } else if (result.isDenied) {
+                shareRoomByEmail();
+            }
+             if (isScreenAllowed) {
+                rc.shareScreen();
+            }
+        });
         makeRoomQR();
     }
 }
 
-// ####################################################
-// ROOM UTILITY
-// ####################################################
 
-// function makeRoomQR() {
-//     let qr = new QRious({
-//         element: document.getElementById('qrRoom'),
-//         value: RoomURL,
-//     });
-//     qr.set({
-//         size: 256,
-//     });
-// }
+function makeRoomQR() {
+    let qr = new QRious({
+        element: document.getElementById('qrRoom'),
+        value: RoomURL,
+    });
+    qr.set({
+        size: 256,
+    });
+}
 
 function copyRoomURL() {
     let tmpInput = document.createElement('input');
     document.body.appendChild(tmpInput);
     tmpInput.value = RoomURL;
     tmpInput.select();
-    tmpInput.setSelectionRange(0, 99999); // For mobile devices
+    tmpInput.setSelectionRange(0, 99999); 
     navigator.clipboard.writeText(tmpInput.value);
     document.body.removeChild(tmpInput);
     userLog('info', 'Meeting URL copied to clipboard 👍', 'top-end');
@@ -986,10 +956,8 @@ function shareRoomByEmail() {
     });
 }
 
-// ####################################################
-// JOIN ROOM
-// ####################################################
-
+ // JOIN ROOM
+ 
 function joinRoom(peer_name, room_id) {
     if (rc && rc.isConnected()) {
         console.log('Already connected to a room');
@@ -1144,9 +1112,8 @@ function setColor(elem, color) {
     elem.style.color = color;
 }
 
-// ####################################################
-// SESSION TIMER
-// ####################################################
+ // SESSION TIMER
+
 
 function startSessionTimer() {
     sessionTime.style.display = 'inline';
@@ -1170,10 +1137,8 @@ function getTimeToString(time) {
     return `${formattedHH}:${formattedMM}:${formattedSS}`;
 }
 
-// ####################################################
-// RECORDING TIMER
-// ####################################################
-
+ // RECORDING TIMER
+ 
 function secondsToHms(d) {
     d = Number(d);
     let h = Math.floor(d / 3600);
@@ -1198,10 +1163,8 @@ function stopRecordingTimer() {
     clearInterval(recTimer);
 }
 
-// ####################################################
-// HTML BUTTONS
-// ####################################################
-
+ // HTML BUTTONS
+ 
 function handleButtons() {
     control.onmouseover = () => {
         isButtonsBarOver = true;
@@ -1523,10 +1486,8 @@ function handleButtons() {
     };
 }
 
-// ####################################################
-// HANDLE INIT USER
-// ####################################################
-
+ // HANDLE INIT USER
+ 
 function setButtonsInit() {
     if (!DetectRTC.isMobileDevice) {
         setTippy('initAudioButton', 'Toggle the audio', 'top');
@@ -1542,7 +1503,7 @@ function setButtonsInit() {
 }
 
 function handleSelectsInit() {
-    // devices init options
+    
     initVideoSelect.onchange = async () => {
         await changeCamera(initVideoSelect.value);
         videoSelect.selectedIndex = initVideoSelect.selectedIndex;
@@ -1574,15 +1535,15 @@ async function setSelectsInit() {
                 video: lS.DEVICES_COUNT.video,
             },
         });
-        //
+        
         initMicrophoneSelect.selectedIndex = localStorageDevices.audio.index;
         initSpeakerSelect.selectedIndex = localStorageDevices.speaker.index;
         initVideoSelect.selectedIndex = localStorageDevices.video.index;
-        //
+        
         microphoneSelect.selectedIndex = initMicrophoneSelect.selectedIndex;
         speakerSelect.selectedIndex = initSpeakerSelect.selectedIndex;
         videoSelect.selectedIndex = initVideoSelect.selectedIndex;
-        //
+        
         if (lS.DEVICES_COUNT.audio !== localStorageDevices.audio.count) {
             console.log('04.1 ----> Audio devices seems changed, use default index 0');
             initMicrophoneSelect.selectedIndex = 0;
@@ -1691,7 +1652,7 @@ async function toggleScreenSharing() {
 }
 
 function handleSelects() {
-    // devices options
+   
     videoSelect.onchange = () => {
         videoQuality.selectedIndex = 0;
         rc.closeThenProduce(RoomClient.mediaType.video, videoSelect.value);
@@ -1986,9 +1947,9 @@ function handleSelects() {
     };
 }
 
-// ####################################################
+
 // HTML INPUTS
-// ####################################################
+
 
 function handleInputs() {
     chatMessage.onkeyup = (e) => {
@@ -2046,15 +2007,13 @@ function handleInputs() {
             ':N': '🥶',
             ':J': '🥴',
         };
-        // Create a regular expression pattern for all keys in chatInputEmoji
-        const regexPattern = new RegExp(
+         const regexPattern = new RegExp(
             Object.keys(chatInputEmoji)
                 .map((key) => key.replace(/([()[{*+.$^\\|?])/g, '\\$1'))
                 .join('|'),
             'gim',
         );
-        // Replace matching patterns with corresponding emojis
-        this.value = this.value.replace(regexPattern, (match) => chatInputEmoji[match]);
+         this.value = this.value.replace(regexPattern, (match) => chatInputEmoji[match]);
 
         rc.checkLineBreaks();
     };
@@ -2065,9 +2024,8 @@ function handleInputs() {
     };
 }
 
-// ####################################################
-// EMOJI PIKER
-// ####################################################
+ // EMOJI PIKER
+
 
 function handleChatEmojiPicker() {
     const pickerOptions = {
@@ -2125,10 +2083,9 @@ function handleRoomEmojiPicker() {
     }
 }
 
-// ####################################################
-// LOAD SETTINGS FROM LOCAL STORAGE
-// ####################################################
 
+// LOAD SETTINGS FROM LOCAL STORAGE
+ 
 function loadSettingsFromLocalStorage() {
     rc.showChatOnMessage = localStorageSettings.show_chat_on_msg;
     transcription.isPersistentMode = localStorageSettings.transcript_persistent_mode;
@@ -2173,10 +2130,8 @@ function loadSettingsFromLocalStorage() {
     resizeMainButtons();
 }
 
-// ####################################################
-// ROOM CLIENT EVENT LISTNERS
-// ####################################################
-
+ // ROOM CLIENT EVENT LISTNERS
+ 
 function handleRoomClientEvents() {
     rc.on(RoomClient.EVENTS.startRec, () => {
         console.log('Room event: Client start recoding');
@@ -2269,14 +2224,12 @@ function handleRoomClientEvents() {
         show(startVideoButton);
         setVideoButtonsDisabled(false);
         isVideoPrivacyActive = false;
-        // if (isParticipantsListOpen) getRoomParticipants();
-    });
+     });
     rc.on(RoomClient.EVENTS.startScreen, () => {
         console.log('Room event: Client start screen');
         hide(startScreenButton);
         show(stopScreenButton);
-        // if (isParticipantsListOpen) getRoomParticipants();
-    });
+     });
     rc.on(RoomClient.EVENTS.pauseScreen, () => {
         console.log('Room event: Client pause screen');
     });
@@ -2287,8 +2240,7 @@ function handleRoomClientEvents() {
         console.log('Room event: Client stop screen');
         hide(stopScreenButton);
         show(startScreenButton);
-        // if (isParticipantsListOpen) getRoomParticipants();
-    });
+     });
     rc.on(RoomClient.EVENTS.roomLock, () => {
         console.log('Room event: Client lock room');
         hide(lockRoomButton);
@@ -2353,9 +2305,8 @@ function handleRoomClientEvents() {
     });
 }
 
-// ####################################################
-// UTILITY
-// ####################################################
+ // UTILITY
+
 
 function leaveFeedback() {
     Swal.fire({
@@ -2559,9 +2510,8 @@ function getId(id) {
     return document.getElementById(id);
 }
 
-// ####################################################
-// HANDLE WHITEBOARD
-// ####################################################
+ // HANDLE WHITEBOARD
+
 
 function toggleWhiteboard() {
     if (!wbIsOpen) rc.sound('open');
@@ -3052,17 +3002,15 @@ function whiteboardAction(data, emit = true) {
 }
 
 function wbDrawing(status) {
-    wbCanvas.isDrawingMode = status; // Disable free drawing
-    wbCanvas.selection = status; // Disable object selection
+    wbCanvas.isDrawingMode = status;  
+    wbCanvas.selection = status;  
     wbCanvas.forEachObject(function (obj) {
-        obj.selectable = status; // Make all objects unselectable
+        obj.selectable = status;  
     });
 }
 
-// ####################################################
-// HANDLE PARTICIPANTS
-// ####################################################
-
+ // HANDLE PARTICIPANTS
+ 
 async function getRoomPeers() {
     let room_info = await rc.getRoomInfo();
     return new Map(JSON.parse(room_info.peers));
@@ -3125,8 +3073,7 @@ function getParticipantsList(peers) {
             <div class="status"> <i class="fa fa-circle online"></i> online ${participantsCount}</div>
         </div>`;
 
-    // ONLY PRESENTER CAN EXECUTE THIS CMD
-    if (!isRulesActive || isPresenter) {
+     if (!isRulesActive || isPresenter) {
         li += `
         <div style="class="dropdown">
             <button 
@@ -3158,8 +3105,7 @@ function getParticipantsList(peers) {
     </li>
     `;
 
-    // PEERS IN THE CURRENT ROOM
-    for (const peer of Array.from(peers.keys())) {
+     for (const peer of Array.from(peers.keys())) {
         const peer_info = peers.get(peer).peer_info;
         const peer_name = peer_info.peer_name;
         const peer_name_limited = peer_name.length > 15 ? peer_name.substring(0, 10) + '*****' : peer_name;
@@ -3173,10 +3119,8 @@ function getParticipantsList(peers) {
         const peer_id = peer_info.peer_id;
         const avatarImg = getParticipantAvatar(peer_name);
 
-        // NOT ME
-        if (socket.id !== peer_id) {
-            // PRESENTER HAS MORE OPTIONS
-            if (isRulesActive && isPresenter) {
+         if (socket.id !== peer_id) {
+             if (isRulesActive && isPresenter) {
                 li += `
                 <li 
                     id='${peer_id}'
@@ -3219,9 +3163,7 @@ function getParticipantsList(peers) {
                         <button class="ml5" id='${peer_id}___pScreen' onclick="rc.peerAction('me',this.id,'stop')">${peer_screen}</button>
                 `;
 
-                // li += `
-                //         <button class="ml5" >${peer_presenter}</button>`;
-
+                 
                 if (peer_info.peer_hand) {
                     li += `
                         <button class="ml5" >${peer_hand}</button>`;
@@ -3281,9 +3223,7 @@ function getParticipantsList(peers) {
                         <button class="ml5" id='${peer_id}___pScreen' onclick="rc.peerGuestNotAllowed('screen')">${peer_screen}</button>
                         `;
 
-                // li += `
-                //         <button class="ml5" >${peer_presenter}</button>`;
-
+                 
                 if (peer_info.peer_hand) {
                     li += ` 
                         <button class="ml5" >${peer_hand}</button>`;
@@ -3332,10 +3272,8 @@ function getParticipantAvatar(peerName) {
     return rc.genAvatarSvg(peerName, 32);
 }
 
-// ####################################################
-// SET THEME
-// ####################################################
-
+ // SET THEME
+ 
 function setTheme() {
     selectTheme.selectedIndex = localStorageSettings.theme;
     const theme = selectTheme.value;
