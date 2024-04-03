@@ -16,7 +16,7 @@ const BUTTONS = {
         startVideoButton: true,
         startScreenButton: true,
         swapCameraButton: true,
-        // chatButton: true,
+         chatButton: true,
         // raiseHandButton: true,
         // transcriptionButton: true,
         // whiteboardButton: true,
@@ -119,11 +119,6 @@ function handleRules(isPresenter) {
         BUTTONS.consumerVideo.muteVideoButton = true;
         BUTTONS.whiteboard.whiteboardLockButton = true;
         
-
-        // ##################################
-        // Auto detected rules for presenter
-        // ##################################
-
         
         isBroadcastingEnabled = localStorageSettings.broadcasting;
         switchBroadcasting.checked = isBroadcastingEnabled;
