@@ -43,9 +43,9 @@ echo "<script>window.location.href ='index.php'</script>";
                             <li><a href="#">Home</a></li>
                             <li><a href="#services">Services</a></li>
                             <li><a href="#about_us">About Us</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
+                            <li><a href="http://localhost/Sveri%20Hackthon/main/">Medicine</a></li>
                             <li><a href="#contact_us">Contact Us</a></li>
-                            <li><a href="#logins">Logins</a></li>  
+                            <li><a href="#logins">Logins</a></li> 
                         </ul>
                     </div>
                     <div class="col-sm-2 d-none d-lg-block appoint">
